@@ -1,4 +1,4 @@
-import java.io.BufferedReader;
+import java.io.PushbackReader;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -8,7 +8,7 @@ import java.util.Queue;
 
 public class Tokenizer {
 
-    private static BufferedReader reader;
+    private static PushbackReader reader;
     private static Queue<Integer> tokens;
     private static char curr;
     private static boolean readID = false;
@@ -22,8 +22,9 @@ public class Tokenizer {
     public static Map<String, Integer> tokenNumbers = new HashMap<>();
 
     private static Queue<String> identifiers = new LinkedList<String>();
+    private static Queue<Integer> integers = new LinkedList<Integer>();
 
-    public Tokenizer(BufferedReader reader) throws Exception {
+    public Tokenizer(PushbackReader reader) throws Exception {
         Tokenizer.reader = reader;
         Tokenizer.tokens = new LinkedList<Integer>();
         loadTokenMap();
@@ -73,8 +74,12 @@ public class Tokenizer {
             } else if (curr == 'r') {
                 readRead();
             } else if ((curr >= 65 && curr <= 90)) { //if current character is uppercase
-                //readID();
-            } else if (WHITE_SPACE.contains(curr)) {
+                readID();
+            } else if ((curr >= 48 && curr <= 57)) {//if current character is a number 0-9
+                readInteger();
+            }
+
+            else if (WHITE_SPACE.contains(curr)) {
                 //readID = false;
                 continue;
             }
@@ -331,16 +336,50 @@ public class Tokenizer {
         readID = false;
     }
 
-    /*
-     * public static void readID() throws Exception { boolean valid = true; int
-     * c; String ID = ""; ID += curr; while ((c = reader.read()) != -1 && c >=
-     * 65 && c <= 90) { ID += (char) c; } while ((c = reader.read()) != -1 && c
-     * >= 48 && c <= 57) { ID += (char) c; }
-     *
-     * if (!valid) { throw new Exception("String not valid"); }
-     *
-     * tokens.add(tokenNumbers.get("id")); identifiers.add(ID); readID = true; }
-     */
+    public static void readID() throws Exception {
+        boolean valid = true;
+        int c;
+        String ID = "";
+        ID += curr;
+        while ((c = reader.read()) != -1 && c >= 65 && c <= 90) {
+            ID += (char) c;
+        }
+        while ((c = reader.read()) != -1 && c >= 48 && c <= 57) {
+            ID += (char) c;
+        }
+
+        if (!valid) {
+            throw new Exception("String not valid");
+        }
+
+        tokens.add(tokenNumbers.get("id"));
+        identifiers.add(ID);
+        reader.unread((char) c);
+    }
+
+    public static void readInteger() throws Exception {
+        boolean valid = true;
+        int c;
+        int intValue = 0;
+        intValue *= 10;
+        intValue += curr - 48;
+        while ((c = reader.read()) != -1 && c >= 48 && c <= 57) {
+            intValue *= 10;
+            intValue += c - 48;
+        }
+        if (c >= 65 && c <= 90) {
+            valid = false;
+        }
+
+        if (!valid) {
+            throw new Exception("String not valid");
+        }
+
+        tokens.add(tokenNumbers.get("integer"));
+        integers.add(intValue);
+        reader.unread((char) c);
+    }
+
     //Returns integer value of current token
     public Integer getToken() {
         return tokens.peek();
@@ -353,7 +392,7 @@ public class Tokenizer {
 
     //returns value of int token
     public int intVal() {
-        return tokens.peek();
+        return integers.remove();
 
     }
 

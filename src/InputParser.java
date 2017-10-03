@@ -1,5 +1,5 @@
-import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.PushbackReader;
 
 public class InputParser {
 
@@ -15,15 +15,18 @@ public class InputParser {
         System.out.println(filename);
 
         fileReader = new FileReader(filename);
-        BufferedReader bufferedReader = new BufferedReader(fileReader);
+        PushbackReader pbReader = new PushbackReader(fileReader);
 
-        Tokenizer tokenizer = new Tokenizer(bufferedReader);
+        Tokenizer tokenizer = new Tokenizer(pbReader);
 
         //loop through all tokens, looking at their values and prints each tokens' corresponding number
         tokenValue = tokenizer.getToken();
         while (tokenValue != Tokenizer.tokenNumbers.get("EOF")) {
             if (tokenValue == Tokenizer.tokenNumbers.get("id")) {
                 System.out.println(tokenValue + " " + tokenizer.idName());
+            } else if (tokenValue == Tokenizer.tokenNumbers.get("integer")) {
+                System.out.println(tokenValue + " " + tokenizer.intVal());
+
             } else {
                 System.out.println(tokenValue);
             }
