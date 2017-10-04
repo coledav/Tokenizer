@@ -1,3 +1,5 @@
+package Tokenizer.src;
+
 import java.io.PushbackReader;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -23,7 +25,7 @@ public class Tokenizer {
 
     //Stores every identifier that is tokenized so it can be recalled later
     private static Queue<String> identifiers = new LinkedList<String>();
-    
+
     //Stores every integer value that is tokenized so it can be recalled later
     private static Queue<Integer> integers = new LinkedList<Integer>();
 
@@ -79,71 +81,71 @@ public class Tokenizer {
                 readID();
             } else if ((curr >= 48 && curr <= 57)) {//if current character is a number 0-9
                 readInteger();
-            }else if (curr == ';') {
+            } else if (curr == ';') {
                 tokens.add(tokenNumbers.get(";"));
-            }else if (curr == ',') {
+            } else if (curr == ',') {
                 tokens.add(tokenNumbers.get(","));
-            }else if (curr == '!') {
+            } else if (curr == '!') {
                 tokens.add(tokenNumbers.get("!"));
-            }else if (curr == '[') {
+            } else if (curr == '[') {
                 tokens.add(tokenNumbers.get("["));
-            }else if (curr == ']') {
+            } else if (curr == ']') {
                 tokens.add(tokenNumbers.get("]"));
-            }else if (curr == '(') {
+            } else if (curr == '(') {
                 tokens.add(tokenNumbers.get("("));
-            }else if (curr == ')') {
+            } else if (curr == ')') {
                 tokens.add(tokenNumbers.get(")"));
-            }else if (curr == '+') {
+            } else if (curr == '+') {
                 tokens.add(tokenNumbers.get("+"));
-            }else if (curr == '-') {
+            } else if (curr == '-') {
                 tokens.add(tokenNumbers.get("-"));
-            }else if (curr == '*') {
+            } else if (curr == '*') {
                 tokens.add(tokenNumbers.get("*"));
-            }else if (curr == '=') {
-            	curr = (char) reader.read();
-            	if(curr == '='){
-            		tokens.add(tokenNumbers.get("=="));
-            	}else{
-            		tokens.add(tokenNumbers.get("="));
-            		reader.unread(curr);
-            	}
-            }else if (curr == '&') {
-            	curr = (char) reader.read();
-            	if(curr == '&'){
-            		tokens.add(tokenNumbers.get("&&"));
-            	}else{
-            		throw new Exception("Illegal symbol");
-            	}
-            }else if (curr == '|') {
-            	curr = (char) reader.read();
-            	if(curr == '|'){
-            		tokens.add(tokenNumbers.get("||"));
-            	}else{
-            		throw new Exception("Illegal symbol");
-            	}
-            }else if (curr == '!') {
-            	curr = (char) reader.read();
-            	if(curr == '='){
-            		tokens.add(tokenNumbers.get("!="));
-            	}else{
-            		throw new Exception("Illegal symbol");
-            	}
-            }else if (curr == '<') {
-            	curr = (char) reader.read();
-            	if(curr == '='){
-            		tokens.add(tokenNumbers.get("<="));
-            	}else{
-            		tokens.add(tokenNumbers.get("<"));
-            		reader.unread(curr);
-            	}
-            }else if (curr == '>') {
-            	curr = (char) reader.read();
-            	if(curr == '='){
-            		tokens.add(tokenNumbers.get(">="));
-            	}else{
-            		tokens.add(tokenNumbers.get(">"));
-            		reader.unread(curr);
-            	}
+            } else if (curr == '=') {
+                curr = (char) reader.read();
+                if (curr == '=') {
+                    tokens.add(tokenNumbers.get("=="));
+                } else {
+                    tokens.add(tokenNumbers.get("="));
+                    reader.unread(curr);
+                }
+            } else if (curr == '&') {
+                curr = (char) reader.read();
+                if (curr == '&') {
+                    tokens.add(tokenNumbers.get("&&"));
+                } else {
+                    throw new Exception("Illegal symbol");
+                }
+            } else if (curr == '|') {
+                curr = (char) reader.read();
+                if (curr == '|') {
+                    tokens.add(tokenNumbers.get("||"));
+                } else {
+                    throw new Exception("Illegal symbol");
+                }
+            } else if (curr == '!') {
+                curr = (char) reader.read();
+                if (curr == '=') {
+                    tokens.add(tokenNumbers.get("!="));
+                } else {
+                    throw new Exception("Illegal symbol");
+                }
+            } else if (curr == '<') {
+                curr = (char) reader.read();
+                if (curr == '=') {
+                    tokens.add(tokenNumbers.get("<="));
+                } else {
+                    tokens.add(tokenNumbers.get("<"));
+                    reader.unread(curr);
+                }
+            } else if (curr == '>') {
+                curr = (char) reader.read();
+                if (curr == '=') {
+                    tokens.add(tokenNumbers.get(">="));
+                } else {
+                    tokens.add(tokenNumbers.get(">"));
+                    reader.unread(curr);
+                }
             }
 
             else if (WHITE_SPACE.contains(curr)) {
@@ -169,7 +171,9 @@ public class Tokenizer {
                             curr = (char) reader.read();
                             if (curr == 'm') {
                                 c = reader.read();
-                                if (WHITE_SPACE.contains((char) c) || SYMBOLS.contains((char) c )|| c == -1) {
+                                if (WHITE_SPACE.contains((char) c)
+                                        || SYMBOLS.contains((char) c)
+                                        || c == -1) {
                                     tokens.add(tokenNumbers.get("program"));
                                     valid = true;
                                     reader.unread((char) c);
@@ -198,7 +202,8 @@ public class Tokenizer {
                     curr = (char) reader.read();
                     if (curr == 'n') {
                         c = reader.read();
-                        if (WHITE_SPACE.contains((char) c) || SYMBOLS.contains((char) c )|| c == -1) {
+                        if (WHITE_SPACE.contains((char) c)
+                                || SYMBOLS.contains((char) c) || c == -1) {
                             tokens.add(tokenNumbers.get("begin"));
                             valid = true;
                             reader.unread((char) c);
@@ -218,7 +223,8 @@ public class Tokenizer {
         curr = (char) c;
         if (curr == 'd') {
             c = reader.read();
-            if (WHITE_SPACE.contains((char) c) || SYMBOLS.contains((char) c )|| c == -1) {
+            if (WHITE_SPACE.contains((char) c) || SYMBOLS.contains((char) c)
+                    || c == -1) {
                 tokens.add(tokenNumbers.get("end"));
                 valid = true;
                 reader.unread((char) c);
@@ -237,7 +243,8 @@ public class Tokenizer {
             curr = (char) reader.read();
             if (curr == 'e') {
                 c = reader.read();
-                if (WHITE_SPACE.contains((char) c) || SYMBOLS.contains((char) c )|| c == -1) {
+                if (WHITE_SPACE.contains((char) c) || SYMBOLS.contains((char) c)
+                        || c == -1) {
                     tokens.add(tokenNumbers.get("else"));
                     valid = true;
                     reader.unread((char) c);
@@ -255,7 +262,8 @@ public class Tokenizer {
         curr = (char) c;
         if (curr == 't') {
             c = reader.read();
-            if (WHITE_SPACE.contains((char) c) || SYMBOLS.contains((char) c )|| c == -1) {
+            if (WHITE_SPACE.contains((char) c) || SYMBOLS.contains((char) c)
+                    || c == -1) {
                 tokens.add(tokenNumbers.get("int"));
                 valid = true;
                 reader.unread((char) c);
@@ -270,7 +278,8 @@ public class Tokenizer {
         boolean valid = false;
         int c = reader.read();
         curr = (char) c;
-        if (WHITE_SPACE.contains((char) c) || SYMBOLS.contains((char) c )|| c == -1) {
+        if (WHITE_SPACE.contains((char) c) || SYMBOLS.contains((char) c)
+                || c == -1) {
             tokens.add(tokenNumbers.get("if"));
             valid = true;
             reader.unread((char) c);
@@ -290,7 +299,8 @@ public class Tokenizer {
                 curr = (char) reader.read();
                 if (curr == 'n') {
                     c = reader.read();
-                    if (WHITE_SPACE.contains((char) c) || SYMBOLS.contains((char) c )|| c == -1) {
+                    if (WHITE_SPACE.contains((char) c)
+                            || SYMBOLS.contains((char) c) || c == -1) {
                         tokens.add(tokenNumbers.get("then"));
                         valid = true;
                         reader.unread((char) c);
@@ -313,7 +323,8 @@ public class Tokenizer {
                 curr = (char) reader.read();
                 if (curr == 'e') {
                     c = reader.read();
-                    if (WHITE_SPACE.contains((char) c) || SYMBOLS.contains((char) c )|| c == -1) {
+                    if (WHITE_SPACE.contains((char) c)
+                            || SYMBOLS.contains((char) c) || c == -1) {
                         tokens.add(tokenNumbers.get("while"));
                         valid = true;
                         reader.unread((char) c);
@@ -336,7 +347,8 @@ public class Tokenizer {
                 curr = (char) reader.read();
                 if (curr == 'e') {
                     c = reader.read();
-                    if (WHITE_SPACE.contains((char) c) || SYMBOLS.contains((char) c )|| c == -1) {
+                    if (WHITE_SPACE.contains((char) c)
+                            || SYMBOLS.contains((char) c) || c == -1) {
                         tokens.add(tokenNumbers.get("write"));
                         valid = true;
                         reader.unread((char) c);
@@ -359,7 +371,8 @@ public class Tokenizer {
                 curr = (char) reader.read();
                 if (curr == 'p') {
                     c = reader.read();
-                    if (WHITE_SPACE.contains((char) c) || SYMBOLS.contains((char) c )|| c == -1) {
+                    if (WHITE_SPACE.contains((char) c)
+                            || SYMBOLS.contains((char) c) || c == -1) {
                         tokens.add(tokenNumbers.get("loop"));
                         valid = true;
                         reader.unread((char) c);
@@ -382,7 +395,8 @@ public class Tokenizer {
                 curr = (char) reader.read();
                 if (curr == 'd') {
                     c = reader.read();
-                    if (WHITE_SPACE.contains((char) c) || SYMBOLS.contains((char) c )|| c == -1) {
+                    if (WHITE_SPACE.contains((char) c)
+                            || SYMBOLS.contains((char) c) || c == -1) {
                         tokens.add(tokenNumbers.get("read"));
                         valid = true;
                         reader.unread((char) c);
