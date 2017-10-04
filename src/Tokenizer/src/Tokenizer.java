@@ -36,6 +36,12 @@ public class Tokenizer {
         tokenize();
     }
 
+    /*
+     * This method reads one character at a time from the reader. For each
+     * character, it checks every possible token that the character could be a
+     * part of. When a distinguishing character is found, the program goes to a
+     * subroutine to parse that specific token.
+     */
     private static void tokenize() throws Exception {
         int c;
         while ((c = reader.read()) != -1) {

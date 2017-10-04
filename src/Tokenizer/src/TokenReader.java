@@ -20,6 +20,7 @@ public class TokenReader {
     public static void main(String[] args) throws Exception {
         String filename = args[0];
 
+        //Open file
         fileReader = new FileReader(filename);
         PushbackReader pbReader = new PushbackReader(fileReader);
 
