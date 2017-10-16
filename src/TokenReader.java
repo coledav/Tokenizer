@@ -1,7 +1,12 @@
 import java.io.FileReader;
 import java.io.PushbackReader;
 
-public class InputParser {
+/*
+ * This class opens a file which is given in a command line argument and 
+ * creates a tokenizer object to turn the text of the file into Core tokens.
+ * Finally the token numbers are printed to standard output
+ */
+public class TokenReader {
 
     private static FileReader fileReader;
     private String program;
@@ -12,28 +17,20 @@ public class InputParser {
 
     public static void main(String[] args) throws Exception {
         String filename = args[0];
-        System.out.println(filename);
 
         fileReader = new FileReader(filename);
         PushbackReader pbReader = new PushbackReader(fileReader);
 
         Tokenizer tokenizer = new Tokenizer(pbReader);
 
-        //loop through all tokens, looking at their values and prints each tokens' corresponding number
+        //loop through all tokens and prints each tokens' corresponding number
         tokenValue = tokenizer.getToken();
         while (tokenValue != Tokenizer.tokenNumbers.get("EOF")) {
-            if (tokenValue == Tokenizer.tokenNumbers.get("id")) {
-                System.out.println(tokenValue + " " + tokenizer.idName());
-            } else if (tokenValue == Tokenizer.tokenNumbers.get("integer")) {
-                System.out.println(tokenValue + " " + tokenizer.intVal());
-
-            } else {
-                System.out.println(tokenValue);
-            }
-
+        	System.out.println(tokenValue);
             tokenizer.skipToken();
             tokenValue = tokenizer.getToken();
         }
+        System.out.println(tokenValue);
     }
 
 }

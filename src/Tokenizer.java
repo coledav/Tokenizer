@@ -11,7 +11,6 @@ public class Tokenizer {
     private static PushbackReader reader;
     private static Queue<Integer> tokens;
     private static char curr;
-    private static boolean readID = false;
 
     private static final List<Character> SYMBOLS = Arrays.asList(';', ',', '=',
             '!', '[', ']', '&', '|', '(', ')', '+', '-', '*', '<', '>');
@@ -19,9 +18,13 @@ public class Tokenizer {
     private static final List<Character> WHITE_SPACE = Arrays.asList(' ', '\n',
             '\r', '\t');
 
+    //Stores mapping of token strings to their identification numbers
     public static Map<String, Integer> tokenNumbers = new HashMap<>();
 
+    //Stores every identifier that is tokenized so it can be recalled later
     private static Queue<String> identifiers = new LinkedList<String>();
+    
+    //Stores every integer value that is tokenized so it can be recalled later
     private static Queue<Integer> integers = new LinkedList<Integer>();
 
     public Tokenizer(PushbackReader reader) throws Exception {
@@ -33,7 +36,6 @@ public class Tokenizer {
 
     private static void tokenize() throws Exception {
         int c;
-
         while ((c = reader.read()) != -1) {
             curr = (char) c;
             if (curr == 'p') {
@@ -77,19 +79,76 @@ public class Tokenizer {
                 readID();
             } else if ((curr >= 48 && curr <= 57)) {//if current character is a number 0-9
                 readInteger();
+            }else if (curr == ';') {
+                tokens.add(tokenNumbers.get(";"));
+            }else if (curr == ',') {
+                tokens.add(tokenNumbers.get(","));
+            }else if (curr == '!') {
+                tokens.add(tokenNumbers.get("!"));
+            }else if (curr == '[') {
+                tokens.add(tokenNumbers.get("["));
+            }else if (curr == ']') {
+                tokens.add(tokenNumbers.get("]"));
+            }else if (curr == '(') {
+                tokens.add(tokenNumbers.get("("));
+            }else if (curr == ')') {
+                tokens.add(tokenNumbers.get(")"));
+            }else if (curr == '+') {
+                tokens.add(tokenNumbers.get("+"));
+            }else if (curr == '-') {
+                tokens.add(tokenNumbers.get("-"));
+            }else if (curr == '*') {
+                tokens.add(tokenNumbers.get("*"));
+            }else if (curr == '=') {
+            	curr = (char) reader.read();
+            	if(curr == '='){
+            		tokens.add(tokenNumbers.get("=="));
+            	}else{
+            		tokens.add(tokenNumbers.get("="));
+            		reader.unread(curr);
+            	}
+            }else if (curr == '&') {
+            	curr = (char) reader.read();
+            	if(curr == '&'){
+            		tokens.add(tokenNumbers.get("&&"));
+            	}else{
+            		throw new Exception("Illegal symbol");
+            	}
+            }else if (curr == '|') {
+            	curr = (char) reader.read();
+            	if(curr == '|'){
+            		tokens.add(tokenNumbers.get("||"));
+            	}else{
+            		throw new Exception("Illegal symbol");
+            	}
+            }else if (curr == '!') {
+            	curr = (char) reader.read();
+            	if(curr == '='){
+            		tokens.add(tokenNumbers.get("!="));
+            	}else{
+            		throw new Exception("Illegal symbol");
+            	}
+            }else if (curr == '<') {
+            	curr = (char) reader.read();
+            	if(curr == '='){
+            		tokens.add(tokenNumbers.get("<="));
+            	}else{
+            		tokens.add(tokenNumbers.get("<"));
+            		reader.unread(curr);
+            	}
+            }else if (curr == '>') {
+            	curr = (char) reader.read();
+            	if(curr == '='){
+            		tokens.add(tokenNumbers.get(">="));
+            	}else{
+            		tokens.add(tokenNumbers.get(">"));
+            		reader.unread(curr);
+            	}
             }
 
             else if (WHITE_SPACE.contains(curr)) {
-                //readID = false;
                 continue;
             }
-            //if (!readID) {
-            //if i didn't just read an ID, then get a new character; otherwise
-            //readID() will have already read the next character
-            //    c = reader.read();
-            //} else {
-            //     c = curr;
-            //}
         }
         tokens.add(tokenNumbers.get("EOF"));
     }
@@ -110,9 +169,10 @@ public class Tokenizer {
                             curr = (char) reader.read();
                             if (curr == 'm') {
                                 c = reader.read();
-                                if (WHITE_SPACE.contains((char) c) || c == -1) {
+                                if (WHITE_SPACE.contains((char) c) || SYMBOLS.contains((char) c )|| c == -1) {
                                     tokens.add(tokenNumbers.get("program"));
                                     valid = true;
+                                    reader.unread((char) c);
                                 }
                             }
                         }
@@ -124,7 +184,6 @@ public class Tokenizer {
         if (!valid) {
             throw new Exception("String not valid");
         }
-        readID = false;
     }
 
     private static void readBegin() throws Exception {
@@ -139,9 +198,10 @@ public class Tokenizer {
                     curr = (char) reader.read();
                     if (curr == 'n') {
                         c = reader.read();
-                        if (WHITE_SPACE.contains((char) c) || c == -1) {
+                        if (WHITE_SPACE.contains((char) c) || SYMBOLS.contains((char) c )|| c == -1) {
                             tokens.add(tokenNumbers.get("begin"));
                             valid = true;
+                            reader.unread((char) c);
                         }
                     }
                 }
@@ -150,7 +210,6 @@ public class Tokenizer {
         if (!valid) {
             throw new Exception("String not valid");
         }
-        readID = false;
     }
 
     private static void readEnd() throws Exception {
@@ -159,15 +218,15 @@ public class Tokenizer {
         curr = (char) c;
         if (curr == 'd') {
             c = reader.read();
-            if (WHITE_SPACE.contains((char) c) || c == -1) {
+            if (WHITE_SPACE.contains((char) c) || SYMBOLS.contains((char) c )|| c == -1) {
                 tokens.add(tokenNumbers.get("end"));
                 valid = true;
+                reader.unread((char) c);
             }
         }
         if (!valid) {
             throw new Exception("String not valid");
         }
-        readID = false;
     }
 
     private static void readElse() throws Exception {
@@ -178,16 +237,16 @@ public class Tokenizer {
             curr = (char) reader.read();
             if (curr == 'e') {
                 c = reader.read();
-                if (WHITE_SPACE.contains((char) c) || c == -1) {
+                if (WHITE_SPACE.contains((char) c) || SYMBOLS.contains((char) c )|| c == -1) {
                     tokens.add(tokenNumbers.get("else"));
                     valid = true;
+                    reader.unread((char) c);
                 }
             }
         }
         if (!valid) {
             throw new Exception("String not valid");
         }
-        readID = false;
     }
 
     private static void readInt() throws Exception {
@@ -196,29 +255,29 @@ public class Tokenizer {
         curr = (char) c;
         if (curr == 't') {
             c = reader.read();
-            if (WHITE_SPACE.contains((char) c) || c == -1) {
+            if (WHITE_SPACE.contains((char) c) || SYMBOLS.contains((char) c )|| c == -1) {
                 tokens.add(tokenNumbers.get("int"));
                 valid = true;
+                reader.unread((char) c);
             }
         }
         if (!valid) {
             throw new Exception("String not valid");
         }
-        readID = false;
     }
 
     private static void readIf() throws Exception {
         boolean valid = false;
         int c = reader.read();
         curr = (char) c;
-        if (WHITE_SPACE.contains(curr) || c == -1) {
+        if (WHITE_SPACE.contains((char) c) || SYMBOLS.contains((char) c )|| c == -1) {
             tokens.add(tokenNumbers.get("if"));
             valid = true;
+            reader.unread((char) c);
         }
         if (!valid) {
             throw new Exception("String not valid");
         }
-        readID = false;
     }
 
     private static void readThen() throws Exception {
@@ -231,9 +290,10 @@ public class Tokenizer {
                 curr = (char) reader.read();
                 if (curr == 'n') {
                     c = reader.read();
-                    if (WHITE_SPACE.contains((char) c) || c == -1) {
+                    if (WHITE_SPACE.contains((char) c) || SYMBOLS.contains((char) c )|| c == -1) {
                         tokens.add(tokenNumbers.get("then"));
                         valid = true;
+                        reader.unread((char) c);
                     }
                 }
             }
@@ -241,7 +301,6 @@ public class Tokenizer {
         if (!valid) {
             throw new Exception("String not valid");
         }
-        readID = false;
     }
 
     private static void readWhile() throws Exception {
@@ -254,9 +313,10 @@ public class Tokenizer {
                 curr = (char) reader.read();
                 if (curr == 'e') {
                     c = reader.read();
-                    if (WHITE_SPACE.contains((char) c) || c == -1) {
+                    if (WHITE_SPACE.contains((char) c) || SYMBOLS.contains((char) c )|| c == -1) {
                         tokens.add(tokenNumbers.get("while"));
                         valid = true;
+                        reader.unread((char) c);
                     }
                 }
             }
@@ -264,7 +324,6 @@ public class Tokenizer {
         if (!valid) {
             throw new Exception("String not valid");
         }
-        readID = false;
     }
 
     private static void readWrite() throws Exception {
@@ -277,9 +336,10 @@ public class Tokenizer {
                 curr = (char) reader.read();
                 if (curr == 'e') {
                     c = reader.read();
-                    if (WHITE_SPACE.contains((char) c) || c == -1) {
+                    if (WHITE_SPACE.contains((char) c) || SYMBOLS.contains((char) c )|| c == -1) {
                         tokens.add(tokenNumbers.get("write"));
                         valid = true;
+                        reader.unread((char) c);
                     }
                 }
             }
@@ -287,7 +347,6 @@ public class Tokenizer {
         if (!valid) {
             throw new Exception("String not valid");
         }
-        readID = false;
     }
 
     private static void readLoop() throws Exception {
@@ -300,9 +359,10 @@ public class Tokenizer {
                 curr = (char) reader.read();
                 if (curr == 'p') {
                     c = reader.read();
-                    if (WHITE_SPACE.contains((char) c) || c == -1) {
+                    if (WHITE_SPACE.contains((char) c) || SYMBOLS.contains((char) c )|| c == -1) {
                         tokens.add(tokenNumbers.get("loop"));
                         valid = true;
+                        reader.unread((char) c);
                     }
                 }
             }
@@ -310,7 +370,6 @@ public class Tokenizer {
         if (!valid) {
             throw new Exception("String not valid");
         }
-        readID = false;
     }
 
     private static void readRead() throws Exception {
@@ -323,9 +382,10 @@ public class Tokenizer {
                 curr = (char) reader.read();
                 if (curr == 'd') {
                     c = reader.read();
-                    if (WHITE_SPACE.contains((char) c) || c == -1) {
+                    if (WHITE_SPACE.contains((char) c) || SYMBOLS.contains((char) c )|| c == -1) {
                         tokens.add(tokenNumbers.get("read"));
                         valid = true;
+                        reader.unread((char) c);
                     }
                 }
             }
@@ -333,7 +393,6 @@ public class Tokenizer {
         if (!valid) {
             throw new Exception("String not valid");
         }
-        readID = false;
     }
 
     public static void readID() throws Exception {
@@ -344,6 +403,7 @@ public class Tokenizer {
         while ((c = reader.read()) != -1 && c >= 65 && c <= 90) {
             ID += (char) c;
         }
+        reader.unread((char) c);
         while ((c = reader.read()) != -1 && c >= 48 && c <= 57) {
             ID += (char) c;
         }
