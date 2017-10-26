@@ -23,14 +23,15 @@ public class Interpreter {
         PushbackReader pbReader = new PushbackReader(fileReader);
 
         //Produces tokenizer which contains list of all tokens in program stored at path programFilename
-        Tokenizer tokenizer = new Tokenizer(pbReader);
+        Tokenizer.loadTokenizer(pbReader);
 
         //loop through all tokens and prints each tokens' corresponding number
-        tokenValue = tokenizer.getToken();
+
+        tokenValue = Tokenizer.getToken();
         while (tokenValue != Tokenizer.tokenNumbers.get("EOF")) {
             System.out.println(tokenValue);
-            tokenizer.skipToken();
-            tokenValue = tokenizer.getToken();
+            Tokenizer.skipToken();
+            tokenValue = Tokenizer.getToken();
         }
         System.out.println(tokenValue);
 

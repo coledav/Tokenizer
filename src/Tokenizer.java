@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 
-public class Tokenizer {
+public final class Tokenizer {
 
     private static PushbackReader reader;
     private static Queue<Integer> tokens;
@@ -27,7 +27,12 @@ public class Tokenizer {
     //Stores every integer value that is tokenized so it can be recalled later
     private static Queue<Integer> integers = new LinkedList<Integer>();
 
-    public Tokenizer(PushbackReader reader) throws Exception {
+    //Private constructor so a Tokenizer object can't be instantiated
+    private Tokenizer() {
+
+    }
+
+    public static void loadTokenizer(PushbackReader reader) throws Exception {
         Tokenizer.reader = reader;
         Tokenizer.tokens = new LinkedList<Integer>();
         loadTokenMap();
@@ -148,6 +153,8 @@ public class Tokenizer {
 
             else if (WHITE_SPACE.contains(curr)) {
                 continue;
+            } else {
+                throw new java.lang.Error("Unrecognized symbol");
             }
         }
         tokens.add(tokenNumbers.get("EOF"));
@@ -466,23 +473,23 @@ public class Tokenizer {
     }
 
     //Returns integer value of current token
-    public Integer getToken() {
+    public static Integer getToken() {
         return tokens.peek();
     }
 
     //skips current token
-    public void skipToken() {
+    public static void skipToken() {
         tokens.remove();
     }
 
     //returns value of int token
-    public int intVal() {
+    public static int intVal() {
         return integers.remove();
 
     }
 
     //returns value of ID token
-    public String idName() {
+    public static String idName() {
         return identifiers.remove();
 
     }
