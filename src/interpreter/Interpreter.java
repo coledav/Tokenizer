@@ -1,3 +1,4 @@
+package interpreter;
 import java.io.FileReader;
 import java.io.PushbackReader;
 
@@ -25,17 +26,13 @@ public class Interpreter {
         //Produces tokenizer which contains list of all tokens in program stored at path programFilename
         Tokenizer.loadTokenizer(pbReader);
 
-        //loop through all tokens and prints each tokens' corresponding number
-
-        tokenValue = Tokenizer.getToken();
-        while (tokenValue != Tokenizer.tokenNumbers.get("EOF")) {
-            System.out.println(tokenValue);
-            Tokenizer.skipToken();
-            tokenValue = Tokenizer.getToken();
-        }
-        System.out.println(tokenValue);
-
-        //insert code here which builds parse tree and does all the printing/executing
+//        tokenValue = Tokenizer.getToken();
+//        while (tokenValue != Tokenizer.tokenNumbers.get("EOF")) {
+//            System.out.println(tokenValue);
+//            Tokenizer.skipToken();
+//            tokenValue = Tokenizer.getToken();
+//        }
+//        System.out.println(tokenValue);
 
     }
 
