@@ -7,8 +7,8 @@ public class Program {
     private StatementSeq ss;
 
     public Program() {
-        this.ds = new DeclSeq();
-        this.ss = new StatementSeq();
+        this.ds = null;
+        this.ss = null;
     }
 
     public void parseProgram() {
