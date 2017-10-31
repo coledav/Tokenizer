@@ -12,9 +12,7 @@ import parsetreenodes.Program;
  */
 public class Interpreter {
 
-    private static FileReader parseFileReader;
-    private static FileReader printFileReader;
-    private static FileReader execFileReader;
+    private static FileReader fileReader;
     private String program;
     private static String tokenType;
     private static int tokenValue;
@@ -27,26 +25,18 @@ public class Interpreter {
 
         System.out.println("Program name = " + programFilename);
 
-        parseFileReader = new FileReader(programFilename);
-        PushbackReader parsePbReader = new PushbackReader(parseFileReader);
+        fileReader = new FileReader(programFilename);
+        PushbackReader pbReader = new PushbackReader(fileReader);
 
-        printFileReader = new FileReader(programFilename);
-        PushbackReader printPbReader = new PushbackReader(printFileReader);
-
-        execFileReader = new FileReader(programFilename);
-        PushbackReader execPbReader = new PushbackReader(execFileReader);
-
-        //Load up Tokenizer for the parsing run
-        Tokenizer.loadTokenizer(parsePbReader);
-        //parse program
-
-        Tokenizer.loadTokenizer(printPbReader);
-        //Print program
+        //Load up Tokenizer 
+        Tokenizer.loadTokenizer(pbReader);
+        
         Program prog = new Program();
+        
+        prog.parseProgram();
         prog.printProgram();
+        prog.execProgram();
 
-        Tokenizer.loadTokenizer(execPbReader);
-        //execute program
 
 //        tokenValue = Tokenizer.getToken();
 //        while (tokenValue != Tokenizer.tokenNumbers.get("EOF")) {

@@ -1,6 +1,6 @@
 package parsetreenodes;
 
-import com.sun.javafx.css.Declaration;
+import interpreter.Tokenizer;
 
 public class DeclSeq {
     private Declaration decl;
@@ -12,15 +12,28 @@ public class DeclSeq {
     }
 
     public void parseDeclSeq() {
-
+    	this.decl = new Declaration();
+    	this.decl.parseDeclaration();
+    	
+    	int currentToken = Tokenizer.getToken();
+        if (currentToken == Tokenizer.tokenNumbers.get("int")) {
+        	this.ds = new DeclSeq();
+        	this.ds.parseDeclSeq();
+        }
     }
 
     public void printDeclSeq() {
-
+    	System.out.print(this.decl + " ");
+    	if(this.ds != null){
+    		System.out.print(this.ds + " ");
+    	}
     }
 
     public void execDeclSeq() {
-
+    	this.decl.execDeclaration();
+    	if(this.ds != null){
+    		this.ds.execDeclSeq();
+    	}
     }
 
 }
