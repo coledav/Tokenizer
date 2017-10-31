@@ -1,4 +1,5 @@
 package interpreter;
+
 import java.io.PushbackReader;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -155,7 +156,7 @@ public final class Tokenizer {
             else if (WHITE_SPACE.contains(curr)) {
                 continue;
             } else {
-                throw new java.lang.Error("Unrecognized symbol");
+                //throw new java.lang.Error("Unrecognized symbol");
             }
         }
         tokens.add(tokenNumbers.get("EOF"));

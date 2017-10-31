@@ -4,13 +4,12 @@ public class StatementSeq {
     private Statement statement;
     private StatementSeq ss;
 
-    public DeclSeq() {
+    public StatementSeq() {
         this.statement = null;
         this.ss = null;
     }
 
     public void parseStatementSeq() {
-
     }
 
     public void printStatementSeq() {
