@@ -1,7 +1,10 @@
 package interpreter;
 
+import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.PushbackReader;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 import parsetreenodes.Program;
 
@@ -12,21 +15,27 @@ import parsetreenodes.Program;
  */
 public class Interpreter {
 
-    private static FileReader fileReader;
+    private static FileReader progFileReader;
+    private static FileReader inputFileReader;
     private String program;
     private static String tokenType;
     private static int tokenValue;
     private static String idValue;
     private static int intValue;
+    private static ArrayList<Integer> inputData = new ArrayList<Integer>();
 
     public static void main(String[] args) throws Exception {
         String programFilename = args[0];
         String inputFilename = args[1];
-
-        System.out.println("Program name = " + programFilename);
-
-        fileReader = new FileReader(programFilename);
-        PushbackReader pbReader = new PushbackReader(fileReader);
+        
+        progFileReader = new FileReader(programFilename);
+        PushbackReader pbReader = new PushbackReader(progFileReader);
+        
+        inputFileReader = new FileReader(inputFilename);
+        Scanner scanner = new Scanner(inputFileReader);
+        while(scanner.hasNext()){
+        	inputData.add(scanner.nextInt());
+        }
 
         //Load up Tokenizer 
         Tokenizer.loadTokenizer(pbReader);
