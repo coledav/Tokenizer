@@ -28,6 +28,15 @@ public class Program {
                     "Expected string 'begin', instead found: " + currentToken);
         }
         Tokenizer.skipToken();
+        
+        if (currentToken != Tokenizer.tokenNumbers.get("id") && 
+        		currentToken != Tokenizer.tokenNumbers.get("if") && 
+        		currentToken != Tokenizer.tokenNumbers.get("while") && 
+        		currentToken != Tokenizer.tokenNumbers.get("read") && 
+        		currentToken != Tokenizer.tokenNumbers.get("write")){
+        	throw new java.lang.Error(
+                    "Expected a statement, instead found: " + currentToken);
+        }
         this.ss = new StatementSeq();
         this.ss.parseStatementSeq();
 

@@ -23,9 +23,9 @@ public class DeclSeq {
     }
 
     public void printDeclSeq() {
-    	System.out.print(this.decl + " ");
+    	this.decl.printDeclaration();
     	if(this.ds != null){
-    		System.out.print(this.ds + " ");
+    		this.ds.printDeclSeq();
     	}
     }
 
