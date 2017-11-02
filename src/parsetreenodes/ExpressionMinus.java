@@ -1,11 +1,11 @@
 package parsetreenodes;
 
-public class ExpressionSum extends Expression {
+public class ExpressionMinus extends Expression {
 
 	Expression exp;
 	Factor fac;
 	
-	public ExpressionSum(Expression expr, Factor factor){
+	public ExpressionMinus(Expression expr, Factor factor){
 		this.exp = expr;
 		this.fac = factor;
 		
@@ -14,12 +14,12 @@ public class ExpressionSum extends Expression {
 	@Override
 	public void printExpression() {
 		fac.printFactor();
-		System.out.println(" + ");
+		System.out.println(" - ");
 		exp.printExpression();
 	}
 
 	@Override
 	public int execExpression() {
-		return fac.execFactor() + exp.execExpression();
+		return fac.execFactor() - exp.execExpression();
 	}
 }
