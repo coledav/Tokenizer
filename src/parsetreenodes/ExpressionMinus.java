@@ -2,24 +2,24 @@ package parsetreenodes;
 
 public class ExpressionMinus extends Expression {
 
-	Expression exp;
-	Factor fac;
-	
-	public ExpressionMinus(Expression expr, Factor factor){
-		this.exp = expr;
-		this.fac = factor;
-		
-	}
-	
-	@Override
-	public void printExpression() {
-		fac.printFactor();
-		System.out.println(" - ");
-		exp.printExpression();
-	}
+    Expression exp;
+    Factor fac;
 
-	@Override
-	public int execExpression() {
-		return fac.execFactor() - exp.execExpression();
-	}
+    public ExpressionMinus(Expression expr, Factor factor) {
+        this.exp = expr;
+        this.fac = factor;
+
+    }
+
+    @Override
+    public void printExpression() {
+        this.fac.printFactor();
+        System.out.print(" - ");
+        this.exp.printExpression();
+    }
+
+    @Override
+    public int execExpression() {
+        return this.fac.execFactor() - this.exp.execExpression();
+    }
 }

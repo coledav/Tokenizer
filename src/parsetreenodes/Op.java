@@ -7,6 +7,7 @@ public abstract class Op {
     public static Op parseOp() {
         if (Tokenizer.getToken() == Tokenizer.tokenNumbers.get("integer")) {
             Int integer = new Int(Tokenizer.intVal());
+            Tokenizer.skipToken();
             return new OpInt(integer);
 
         } else if (Tokenizer.getToken() == Tokenizer.tokenNumbers.get("id")) {

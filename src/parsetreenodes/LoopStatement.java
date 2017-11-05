@@ -65,7 +65,7 @@ public class LoopStatement extends Statement {
         this.cond.printCondition();
         System.out.print(" loop\n");
         this.ss.printStatementSeq();
-        System.out.print("\nend;");
+        System.out.print("end;\n");
 
     }
 

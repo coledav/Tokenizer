@@ -35,11 +35,11 @@ public class ConditionComp extends Condition {
         }
         Tokenizer.skipToken();
         this.op2 = Op.parseOp();
-        Tokenizer.skipToken();
 
         currentToken = Tokenizer.getToken();
         if (currentToken != Tokenizer.tokenNumbers.get(")")) {
-            throw new java.lang.Error("Expected ')'");
+            throw new java.lang.Error(
+                    "Expected ')', instead found: " + currentToken);
         }
         Tokenizer.skipToken();
 

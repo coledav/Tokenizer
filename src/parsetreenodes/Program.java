@@ -63,11 +63,11 @@ public class Program {
     }
 
     public void printProgram() {
-        System.out.println("program\n");
+        System.out.print("program\n");
         this.ds.printDeclSeq();
-        System.out.println("begin\n");
+        System.out.print("begin\n");
         this.ss.printStatementSeq();
-        System.out.println("end\n");
+        System.out.print("end\n");
     }
 
     public void execProgram() {

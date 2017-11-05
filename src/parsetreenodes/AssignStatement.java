@@ -14,11 +14,12 @@ public class AssignStatement extends Statement {
 
     public void parseAssign() {
         String idName = Tokenizer.idName();
-        Id id = Id.parseId(idName);
+        this.id = Id.parseId(idName);
 //        if (!id.isDeclared()) {
 //            throw new java.lang.Error(
 //                    "Variable '" + idName + "' is not delcared");
 //        }
+
         int currentToken = Tokenizer.getToken();
         if (currentToken != Tokenizer.tokenNumbers.get("=")) {
             throw new java.lang.Error(
@@ -34,7 +35,6 @@ public class AssignStatement extends Statement {
         } else {
             throw new java.lang.Error("Expected expression");
         }
-        Tokenizer.skipToken();
 
         currentToken = Tokenizer.getToken();
         if (currentToken != Tokenizer.tokenNumbers.get(";")) {
