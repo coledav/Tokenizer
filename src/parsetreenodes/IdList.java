@@ -16,7 +16,10 @@ public class IdList {
 
     public void parseIdList() {
         this.id = Id.parseId(Tokenizer.idName());
-        Tokenizer.skipToken();
+
+        if (Tokenizer.getToken() == Tokenizer.tokenNumbers.get(",")) {
+            Tokenizer.skipToken();
+        }
 
         if (Tokenizer.getToken() == Tokenizer.tokenNumbers.get("id")) {
             this.idList = new IdList();
@@ -35,7 +38,9 @@ public class IdList {
     public ArrayList<Id> execIdList() {
         ArrayList<Id> arrayListIds = new ArrayList<Id>();
         arrayListIds.add(this.id);
-        arrayListIds.addAll(this.idList.execIdList());
+        if (this.idList != null) {
+            arrayListIds.addAll(this.idList.execIdList());
+        }
         return arrayListIds;
     }
 }

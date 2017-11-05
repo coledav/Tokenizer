@@ -2,6 +2,8 @@ package parsetreenodes;
 
 import java.util.ArrayList;
 
+import interpreter.Tokenizer;
+
 public class Id {
 
     private String name;
@@ -26,6 +28,7 @@ public class Id {
 
         Id newId = new Id(name);
         currentIds.add(newId);
+        Tokenizer.skipToken();
         return newId;
     }
 

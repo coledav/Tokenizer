@@ -21,6 +21,14 @@ public class WriteStatement extends Statement {
         Tokenizer.skipToken();
         this.idList = new IdList();
         this.idList.parseIdList();
+
+        currentToken = Tokenizer.getToken();
+        if (currentToken != Tokenizer.tokenNumbers.get(";")) {
+            throw new java.lang.Error(
+                    "Expected string ';', instead found: " + currentToken);
+        } else {
+            Tokenizer.skipToken();
+        }
     }
 
     @Override

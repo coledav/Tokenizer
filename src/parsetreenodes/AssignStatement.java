@@ -15,14 +15,14 @@ public class AssignStatement extends Statement {
     public void parseAssign() {
         String idName = Tokenizer.idName();
         Id id = Id.parseId(idName);
-        if (!id.isDeclared()) {
-            throw new java.lang.Error(
-                    "Variable '" + idName + "' is not delcared");
-        }
-        Tokenizer.skipToken();
+//        if (!id.isDeclared()) {
+//            throw new java.lang.Error(
+//                    "Variable '" + idName + "' is not delcared");
+//        }
         int currentToken = Tokenizer.getToken();
         if (currentToken != Tokenizer.tokenNumbers.get("=")) {
-            throw new java.lang.Error("Expected '='");
+            throw new java.lang.Error(
+                    "Expected '=', instead found: " + currentToken);
         }
         Tokenizer.skipToken();
 
@@ -38,7 +38,8 @@ public class AssignStatement extends Statement {
 
         currentToken = Tokenizer.getToken();
         if (currentToken != Tokenizer.tokenNumbers.get(";")) {
-            throw new java.lang.Error("Expected semi-colon");
+            throw new java.lang.Error(
+                    "Expected semi-colon, instead found: " + currentToken);
         }
         Tokenizer.skipToken();
     }

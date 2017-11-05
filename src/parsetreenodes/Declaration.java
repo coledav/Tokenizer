@@ -13,14 +13,17 @@ public class Declaration {
     }
 
     public void parseDeclaration() {
-        Tokenizer.skipToken();
+        Tokenizer.skipToken(); //skip 'int'
         if (Tokenizer.getToken() == Tokenizer.tokenNumbers.get("id")) {
             this.idList = new IdList();
             this.idList.parseIdList();
         } else {
             throw new java.lang.Error("Expected id list");
         }
-        Tokenizer.skipToken();
+
+//        for (Id id : this.idList.execIdList()) {
+//            id.setDeclared(true);
+//        }
 
         if (Tokenizer.getToken() != Tokenizer.tokenNumbers.get(";")) {
             throw new java.lang.Error("Expected semi-colon");

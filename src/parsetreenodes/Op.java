@@ -11,15 +11,7 @@ public abstract class Op {
 
         } else if (Tokenizer.getToken() == Tokenizer.tokenNumbers.get("id")) {
             Id id = Id.parseId(Tokenizer.idName());
-            if (id.isDeclared()) {
-                if (id.isInitialized()) {
-                    return new OpId(id);
-                } else {
-                    throw new java.lang.Error("ID not initialized");
-                }
-            } else {
-                throw new java.lang.Error("ID not declared");
-            }
+            return new OpId(id);
 
         } else if (Tokenizer.getToken() == Tokenizer.tokenNumbers.get("(")) {
             Tokenizer.skipToken();

@@ -28,7 +28,8 @@ public class LoopStatement extends Statement {
         if (currentToken == Tokenizer.tokenNumbers.get("loop")) {
             Tokenizer.skipToken();
         } else {
-            throw new java.lang.Error("Expected 'loop'");
+            throw new java.lang.Error(
+                    "Expected 'loop', instead found: " + currentToken);
         }
 
         currentToken = Tokenizer.getToken();

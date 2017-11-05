@@ -19,6 +19,13 @@ public class Program {
                             + currentToken);
         }
         Tokenizer.skipToken();
+
+        currentToken = Tokenizer.getToken();
+        if (currentToken != Tokenizer.tokenNumbers.get("int")) {
+            throw new java.lang.Error(
+                    "Expected 'int', instead found: " + currentToken);
+        }
+
         this.ds = new DeclSeq();
         this.ds.parseDeclSeq();
 
@@ -28,13 +35,14 @@ public class Program {
                     "Expected string 'begin', instead found: " + currentToken);
         }
         Tokenizer.skipToken();
-        
-        if (currentToken != Tokenizer.tokenNumbers.get("id") && 
-        		currentToken != Tokenizer.tokenNumbers.get("if") && 
-        		currentToken != Tokenizer.tokenNumbers.get("while") && 
-        		currentToken != Tokenizer.tokenNumbers.get("read") && 
-        		currentToken != Tokenizer.tokenNumbers.get("write")){
-        	throw new java.lang.Error(
+
+        currentToken = Tokenizer.getToken();
+        if (currentToken != Tokenizer.tokenNumbers.get("id")
+                && currentToken != Tokenizer.tokenNumbers.get("if")
+                && currentToken != Tokenizer.tokenNumbers.get("while")
+                && currentToken != Tokenizer.tokenNumbers.get("read")
+                && currentToken != Tokenizer.tokenNumbers.get("write")) {
+            throw new java.lang.Error(
                     "Expected a statement, instead found: " + currentToken);
         }
         this.ss = new StatementSeq();
@@ -55,15 +63,15 @@ public class Program {
     }
 
     public void printProgram() {
-    	System.out.println("program\n");
-    	ds.printDeclSeq();
-    	System.out.println("begin\n");
-    	ss.printStatementSeq();
-    	System.out.println("end\n");
+        System.out.println("program\n");
+        this.ds.printDeclSeq();
+        System.out.println("begin\n");
+        this.ss.printStatementSeq();
+        System.out.println("end\n");
     }
 
     public void execProgram() {
-    	ds.execDeclSeq();
-    	ss.execStatementSeq();
+        this.ds.execDeclSeq();
+        this.ss.execStatementSeq();
     }
 }
