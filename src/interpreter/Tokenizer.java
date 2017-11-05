@@ -1,6 +1,7 @@
 package interpreter;
 
 import java.io.PushbackReader;
+import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -24,10 +25,10 @@ public final class Tokenizer {
     public static Map<String, Integer> tokenNumbers = new HashMap<>();
 
     //Stores every identifier that is tokenized so it can be recalled later
-    private static Queue<String> identifiers = new LinkedList<String>();
+    private static ArrayDeque<String> identifiers = new ArrayDeque<String>();
 
     //Stores every integer value that is tokenized so it can be recalled later
-    private static Queue<Integer> integers = new LinkedList<Integer>();
+    private static ArrayDeque<Integer> integers = new ArrayDeque<Integer>();
 
     //Private constructor so a Tokenizer object can't be instantiated
     private Tokenizer() {
@@ -440,7 +441,7 @@ public final class Tokenizer {
         }
 
         tokens.add(tokenNumbers.get("id"));
-        identifiers.add(ID);
+        identifiers.addLast(ID);
         reader.unread((char) c);
     }
 
@@ -470,7 +471,7 @@ public final class Tokenizer {
         }
 
         tokens.add(tokenNumbers.get("integer"));
-        integers.add(intValue);
+        integers.addLast(intValue);
         reader.unread((char) c);
     }
 
@@ -486,13 +487,13 @@ public final class Tokenizer {
 
     //returns value of int token
     public static int intVal() {
-        return integers.remove();
+        return integers.removeFirst();
 
     }
 
     //returns value of ID token
     public static String idName() {
-        return identifiers.remove();
+        return identifiers.removeFirst();
 
     }
 
