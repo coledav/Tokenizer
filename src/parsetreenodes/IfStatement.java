@@ -95,8 +95,10 @@ public class IfStatement extends Statement {
         if (this.alternative == 1) {
             System.out.print("end;\n");
         } else if (this.alternative == 2) {
+            System.out.print("\t");
             System.out.print("else\n");
             this.ss2.printStatementSeq();
+            System.out.print("\t");
             System.out.print("end;\n");
         }
     }

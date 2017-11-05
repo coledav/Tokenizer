@@ -31,7 +31,9 @@ public class ConditionComp extends Condition {
         } else if (currentToken == Tokenizer.tokenNumbers.get(">=")) {
             this.compOp = ">=";
         } else {
-            throw new java.lang.Error("Expected a comparison operator");
+            throw new java.lang.Error(
+                    "Expected a comparison operator, instead found: "
+                            + currentToken);
         }
         Tokenizer.skipToken();
         this.op2 = Op.parseOp();

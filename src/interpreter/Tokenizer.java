@@ -92,7 +92,13 @@ public final class Tokenizer {
             } else if (curr == ',') {
                 tokens.add(tokenNumbers.get(","));
             } else if (curr == '!') {
-                tokens.add(tokenNumbers.get("!"));
+                curr = (char) reader.read();
+                if (curr == '=') {
+                    tokens.add(tokenNumbers.get("!="));
+                } else {
+                    tokens.add(tokenNumbers.get("!"));
+                    reader.unread(curr);
+                }
             } else if (curr == '[') {
                 tokens.add(tokenNumbers.get("["));
             } else if (curr == ']') {
@@ -126,13 +132,6 @@ public final class Tokenizer {
                 curr = (char) reader.read();
                 if (curr == '|') {
                     tokens.add(tokenNumbers.get("||"));
-                } else {
-                    throw new java.lang.Error("Illegal symbol");
-                }
-            } else if (curr == '!') {
-                curr = (char) reader.read();
-                if (curr == '=') {
-                    tokens.add(tokenNumbers.get("!="));
                 } else {
                     throw new java.lang.Error("Illegal symbol");
                 }
