@@ -44,6 +44,7 @@ public class ReadStatement extends Statement {
         for (Id id : ids) {
             if (id.isDeclared()) {
                 id.setValue(Interpreter.inputData.removeFirst());
+                id.setInitialized(true);
             } else {
                 throw new java.lang.Error(
                         "ID that is being read into is not delcared");

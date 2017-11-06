@@ -16,11 +16,6 @@ public class Interpreter {
 
     private static FileReader progFileReader;
     private static FileReader inputFileReader;
-    private String program;
-    private static String tokenType;
-    private static int tokenValue;
-    private static String idValue;
-    private static int intValue;
     public static ArrayDeque<Integer> inputData = new ArrayDeque<Integer>();
 
     public static void main(String[] args) throws Exception {
@@ -35,6 +30,7 @@ public class Interpreter {
         while (scanner.hasNext()) {
             inputData.addLast(scanner.nextInt());
         }
+        scanner.close();
 
         //Load up Tokenizer
         Tokenizer.loadTokenizer(pbReader);
@@ -43,15 +39,7 @@ public class Interpreter {
 
         prog.parseProgram();
         prog.printProgram();
-
-//        tokenValue = Tokenizer.getToken();
-//        while (tokenValue != Tokenizer.tokenNumbers.get("EOF")) {
-//            System.out.println(tokenValue);
-//            Tokenizer.skipToken();
-//            tokenValue = Tokenizer.getToken();
-//        }
-//        System.out.println(tokenValue);
-
+        prog.execProgram();
     }
 
 }

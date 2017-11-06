@@ -21,10 +21,6 @@ public class Declaration {
             throw new java.lang.Error("Expected id list");
         }
 
-//        for (Id id : this.idList.execIdList()) {
-//            id.setDeclared(true);
-//        }
-
         if (Tokenizer.getToken() != Tokenizer.tokenNumbers.get(";")) {
             throw new java.lang.Error("Expected semi-colon");
         }
@@ -44,7 +40,7 @@ public class Declaration {
                 id.setDeclared(true);
             } else {
                 throw new java.lang.Error(
-                        "Id " + id.getIdName() + "was already declared");
+                        "Id " + id.getIdName() + " was already declared");
             }
         }
     }

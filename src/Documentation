@@ -1,21 +1,27 @@
 Documentation file:
 
-My project is split into two classes; Tokenizer and TokenReader
+I used the object oriented design for my interpreter. Therefore, every production in 
+the CFG is represented using one or more Java classes. Beginning with a Program
+object, the interpreter creates the nodes corresponding with its respective productions,
+and calls instance methods on the children nodes to build lower portion of the parse tree.
+The interpreter recursively descends down the parse tree, creating nodes as it goes.
+The pretty print and execute functions work similarly, although they do not have to construct any
+nodes; they simply traverse the parse tree by relying on the methods of the children nodes
+to print/execute themselves.
 
-TokenReader contains a main method which takes a filename as a command line argument.
-It then opens the file and creates a Tokenizer object which can access the text from the file
-as a series of Core tokens.
+The main Interpreter class first loads the program file and the input file. The input file 
+is read into a data structure where the input numbers can be found later in execution. Then
+the Tokenizer is loaded with the program tokens. Finally, a Program object is created,
+and three calls are made on it: parseProgram, printProgram, and execProgram. 
 
-Tokenizer stores all of the tokens that are contained in the file that was given to it. The Tokenizer reads one character
-at a time, and when a distinguishing character is read, the program is taken to a method that
-determines if the current token being read is valid. If it is, the token is put into a Queue.
-In order to store the values of IDs and integers, there are two additional queues. Tokenizer has four methods;
-getToken(), skipToken(), intVal(), and idName(). 
+To use the interpreter, open the project in Eclipse. Open the Interpreter.java class, and 
+click Run on the toolbar, and click Run Configurations. Click Arguments on the toolbar.
+In the main box, enter the filepath of the program text file which you want to interpret, 
+followed by a space, and then the filepath of the input file. At this point, you may click
+Run, and the interpreter will run.
 
-getToken() returns the current token.
 
-skipToken() skips to the next token
-
-intVal() -- if the current token is an integer, intVal() returns the value of that integer
-
-idName() -- if the current token is an ID, idName() returns the value of that ID
+I tested the interpreter using the sample programs provided on the course website. 
+The parsing and printing work as they should, however the execution phase encounters problems 
+with IDs. Specifically, there is a bug where an ID will be declared and its declared field
+will be set to true, but later on in the execution the field will be shown as false.

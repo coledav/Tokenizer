@@ -15,10 +15,6 @@ public class AssignStatement extends Statement {
     public void parseAssign() {
         String idName = Tokenizer.idName();
         this.id = Id.parseId(idName);
-//        if (!id.isDeclared()) {
-//            throw new java.lang.Error(
-//                    "Variable '" + idName + "' is not delcared");
-//        }
 
         int currentToken = Tokenizer.getToken();
         if (currentToken != Tokenizer.tokenNumbers.get("=")) {
